@@ -5,154 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Faria!</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #0f172a, #1e1b4b);
-            color: #fff;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
-        }
-        .container {
-            text-align: center;
-            width: 100%;
-            max-width: 600px;
-            padding: 20px;
-            position: relative;
-        }
-        /* Screen 1: Cake & Candle */
-        #screen1 {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80vh;
-            cursor: pointer;
-        }
-        .cake {
-            position: relative;
-            font-size: 100px;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
-        }
-        .candle {
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 12px;
-            height: 45px;
-            background: linear-gradient(to right, #ff758c, #ff7eb3);
-            border-radius: 4px;
-        }
-        .flame {
-            position: absolute;
-            top: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 35px;
-            background: radial-gradient(circle, #fff 10%, #ff9800 50%, #f44336 100%);
-            border-radius: 50% 50% 20% 20%;
-            box-shadow: 0 0 20px #ff9800, 0 0 40px #ff5722;
-            animation: flicker 0.6s infinite alternate;
-        }
-        @keyframes flicker {
-            0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
-            100% { transform: translateX(-50%) scale(1.1); opacity: 1; filter: brightness(1.2); }
-        }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .instruction {
-            font-size: 1.2rem;
-            color: #cbd5e1;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 12px 24px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
-
-        /* Screen 2: Birthday Celebration Card */
-        #screen2 {
-            display: none;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-        }
-        #screen2.show {
-            display: block;
-            opacity: 1;
-        }
-        .card {
-            background: rgba(30, 41, 59, 0.85);
-            border: 2px solid rgba(244, 63, 94, 0.4);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 1s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .photo-frame {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 20px auto;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid #f43f5e;
-            box-shadow: 0 0 25px rgba(244, 63, 94, 0.6);
-        }
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        h1 {
-            font-size: 2.2rem;
-            color: #fb7185;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 10px rgba(251, 113, 133, 0.4);
-        }
-        .message {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #e2e8f0;
-            margin-bottom: 20px;
-        }
-        .signature {
-            font-style: italic;
-            color: #f43f5e;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        /* Canvas for Fireworks */
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 999;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: linear-gradient(135deg, #0f172a, #1e1b4b); color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden; }
+        .container { text-align: center; width: 100%; max-width: 600px; padding: 20px; position: relative; }
+        #screen1 { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; cursor: pointer; }
+        .cake { position: relative; font-size: 100px; margin-bottom: 20px; animation: bounce 2s infinite; }
+        .candle { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); width: 12px; height: 45px; background: linear-gradient(to right, #ff758c, #ff7eb3); border-radius: 4px; }
+        .flame { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); width: 20px; height: 35px; background: radial-gradient(circle, #fff 10%, #ff9800 50%, #f44336 100%); border-radius: 50% 50% 20% 20%; box-shadow: 0 0 20px #ff9800, 0 0 40px #ff5722; animation: flicker 0.6s infinite alternate; }
+        @keyframes flicker { 0% { transform: translateX(-50%) scale(1); opacity: 0.9; } 100% { transform: translateX(-50%) scale(1.1); opacity: 1; filter: brightness(1.2); } }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .instruction { font-size: 1.2rem; color: #cbd5e1; background: rgba(255, 255, 255, 0.1); padding: 12px 24px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.3); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } 100% { transform: scale(1); opacity: 0.8; } }
+        #screen2 { display: none; opacity: 0; transition: opacity 1s ease-in-out; }
+        #screen2.show { display: block; opacity: 1; }
+        .card { background: rgba(30, 41, 59, 0.85); border: 2px solid rgba(244, 63, 94, 0.4); border-radius: 20px; padding: 30px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); backdrop-filter: blur(10px); animation: fadeIn 1s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .photo-frame { width: 180px; height: 180px; margin: 0 auto 20px auto; border-radius: 50%; overflow: hidden; border: 4px solid #f43f5e; box-shadow: 0 0 25px rgba(244, 63, 94, 0.6); }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+        h1 { font-size: 2.2rem; color: #fb7185; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(251, 113, 133, 0.4); }
+        .message { font-size: 1.1rem; line-height: 1.6; color: #e2e8f0; margin-bottom: 20px; }
+        .signature { font-style: italic; color: #f43f5e; font-weight: bold; font-size: 1.2rem; }
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
     </style>
 </head>
 <body>
@@ -160,7 +33,7 @@
     <canvas id="fireworksCanvas"></canvas>
 
     <div class="container">
-        <!-- Screen 1 -->
+        <!-- Screen 1: Candle Blow -->
         <div id="screen1" onclick="startCelebration()">
             <div class="cake">
                 🎂
@@ -168,10 +41,10 @@
                     <div class="flame" id="flame"></div>
                 </div>
             </div>
-            <div class="instruction">Tap anywhere to blow the candle & start! 🕯️✨</div>
+            <div class="instruction">Tap anywhere to blow candle! 🕯️✨</div>
         </div>
 
-        <!-- Screen 2 -->
+        <!-- Screen 2: Birthday Card & Fireworks -->
         <div id="screen2">
             <div class="card">
                 <div class="photo-frame">
@@ -179,7 +52,7 @@
                 </div>
                 <h1>Happy Birthday Faria! 🎉</h1>
                 <p class="message">
-                    May this special day bring you endless joy, immense happiness, and wonderful success. You bring so much light and positivity to everyone around you. Have an amazing and blessed year ahead! ✨🎂
+                    Salgirah bohot bohot mubarak ho! ✨ Allah aapko lambi umer, achi sehat aur dher saari khushiyan ata farmaye. Aapki zindagi me hamesha kamyabi ho aur naseeb ache hon! Always stay blessed! 🎂🥳
                 </p>
                 <div class="signature">With best wishes & prayers! 💫</div>
             </div>
@@ -187,155 +60,180 @@
     </div>
 
     <script>
-        // Web Audio API Happy Birthday Melody Player
-        function playBirthdaySong() {
-            try {
-                const AudioContext = window.AudioContext || window.webkitAudioContext;
-                const ctx = new AudioContext();
-                
-                const notes = [
-                    {f: 392, d: 250}, {f: 392, d: 250}, {f: 440, d: 500}, {f: 392, d: 500}, {f: 523, d: 500}, {f: 494, d: 1000},
-                    {f: 392, d: 250}, {f: 392, d: 250}, {f: 440, d: 500}, {f: 392, d: 500}, {f: 587, d: 500}, {f: 523, d: 1000},
-                    {f: 392, d: 250}, {f: 392, d: 250}, {f: 784, d: 500}, {f: 659, d: 500}, {f: 523, d: 500}, {f: 494, d: 500}, {f: 440, d: 1000},
-                    {f: 698, d: 250}, {f: 698, d: 250}, {f: 659, d: 500}, {f: 523, d: 500}, {f: 587, d: 500}, {f: 523, d: 1000}
-                ];
+        // Web Audio Synthesizer for Candle Blow & Fireworks Sounds
+        let audioCtx;
 
-                let time = ctx.currentTime + 0.1;
-                notes.forEach(note => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(note.f, time);
-                    
-                    gain.gain.setValueAtTime(0.15, time);
-                    gain.gain.exponentialRampToValueAtTime(0.0001, time + (note.d / 1000) - 0.05);
-                    
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    
-                    osc.start(time);
-                    osc.stop(time + (note.d / 1000));
-                    
-                    time += note.d / 1000;
-                });
-            } catch(e) {
-                console.log("Audio not supported", e);
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
             }
         }
 
-        // Fireworks Engine
+        // 1. Candle Blow Sound (Puff/Wind Effect)
+        function playBlowSound() {
+            initAudio();
+            const bufferSize = audioCtx.sampleRate * 0.4;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(400, audioCtx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.4);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start();
+        }
+
+        // 2. Firework Pop / Explosion Sound
+        function playFireworkSound() {
+            if (!audioCtx) return;
+            const bufferSize = audioCtx.sampleRate * 0.3;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = Math.random() * 2 - 1;
+            }
+
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(800, audioCtx.currentTime);
+            filter.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
+
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            noise.start();
+        }
+
+        // 3. Happy Birthday Music Melody
+        function playBirthdaySong() {
+            initAudio();
+            const notes = [
+                {f: 392, d: 250}, {f: 392, d: 250}, {f: 440, d: 500}, {f: 392, d: 500}, {f: 523, d: 500}, {f: 494, d: 1000},
+                {f: 392, d: 250}, {f: 392, d: 250}, {f: 440, d: 500}, {f: 392, d: 500}, {f: 587, d: 500}, {f: 523, d: 1000},
+                {f: 392, d: 250}, {f: 392, d: 250}, {f: 784, d: 500}, {f: 659, d: 500}, {f: 523, d: 500}, {f: 494, d: 500}, {f: 440, d: 1000},
+                {f: 698, d: 250}, {f: 698, d: 250}, {f: 659, d: 500}, {f: 523, d: 500}, {f: 587, d: 500}, {f: 523, d: 1000}
+            ];
+
+            let time = audioCtx.currentTime + 0.1;
+            notes.forEach(note => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(note.f, time);
+                gain.gain.setValueAtTime(0.18, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + (note.d / 1000) - 0.05);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(time);
+                osc.stop(time + (note.d / 1000));
+                time += note.d / 1000;
+            });
+        }
+
+        // Fireworks Visual Engine
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         let fireworks = [];
         let particles = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
         class Firework {
             constructor(x, y, tx, ty) {
-                this.x = x;
-                this.y = y;
-                this.tx = tx;
-                this.ty = ty;
+                this.x = x; this.y = y; this.tx = tx; this.ty = ty;
                 this.distanceToTarget = Math.hypot(tx - x, ty - y);
-                this.distanceTraveled = 0;
-                this.coordinates = [];
+                this.distanceTraveled = 0; this.coordinates = [];
                 this.angle = Math.atan2(ty - y, tx - x);
-                this.speed = 3;
-                this.acceleration = 1.05;
-                this.brightness = Math.random() * 50 + 50;
+                this.speed = 3; this.acceleration = 1.05;
                 this.hue = Math.random() * 360;
             }
             update(index) {
-                this.coordinates.pop();
-                this.coordinates.unshift([this.x, this.y]);
+                this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
                 this.speed *= this.acceleration;
                 let vx = Math.cos(this.angle) * this.speed;
                 let vy = Math.sin(this.angle) * this.speed;
                 this.distanceTraveled = Math.hypot(this.x + vx - this.coordinates[this.coordinates.length-1][0], this.y + vy - this.coordinates[this.coordinates.length-1][1]);
                 if (this.distanceTraveled >= this.distanceToTarget) {
                     createParticles(this.tx, this.ty);
+                    playFireworkSound(); // Trigger sound on burst
                     fireworks.splice(index, 1);
-                } else {
-                    this.x += vx;
-                    this.y += vy;
-                }
+                } else { this.x += vx; this.y += vy; }
             }
             draw() {
                 ctx.beginPath();
                 ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
                 ctx.lineTo(this.x, this.y);
-                ctx.strokeStyle = `hsl(${this.hue}, 100%, ${this.brightness}%)`;
+                ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
                 ctx.stroke();
             }
         }
 
         class Particle {
             constructor(x, y, hue) {
-                this.x = x;
-                this.y = y;
-                this.coordinates = [];
-                for (let i = 0; i < 5; i++) {
-                    this.coordinates.push([x, y]);
-                }
+                this.x = x; this.y = y; this.coordinates = [];
+                for (let i = 0; i < 5; i++) { this.coordinates.push([x, y]); }
                 this.angle = Math.random() * Math.PI * 2;
                 this.speed = Math.random() * 10 + 1;
-                this.friction = 0.95;
-                this.gravity = 1;
-                this.hue = hue;
-                this.brightness = Math.random() * 50 + 50;
-                this.alpha = 1;
-                this.decay = Math.random() * 0.015 + 0.015;
+                this.friction = 0.95; this.gravity = 1; this.hue = hue;
+                this.alpha = 1; this.decay = Math.random() * 0.015 + 0.015;
             }
             update(index) {
-                this.coordinates.pop();
-                this.coordinates.unshift([this.x, this.y]);
+                this.coordinates.pop(); this.coordinates.unshift([this.x, this.y]);
                 this.speed *= this.friction;
                 this.x += Math.cos(this.angle) * this.speed;
                 this.y += Math.sin(this.angle) * this.speed + this.gravity;
                 this.alpha -= this.decay;
-                if (this.alpha <= this.decay) {
-                    particles.splice(index, 1);
-                }
+                if (this.alpha <= this.decay) { particles.splice(index, 1); }
             }
             draw() {
                 ctx.beginPath();
                 ctx.moveTo(this.coordinates[this.coordinates.length - 1][0], this.coordinates[this.coordinates.length - 1][1]);
                 ctx.lineTo(this.x, this.y);
-                ctx.strokeStyle = `hsla(${this.hue}, 100%, ${this.brightness}%, ${this.alpha})`;
+                ctx.strokeStyle = `hsla(${this.hue}, 100%, 50%, ${this.alpha})`;
                 ctx.stroke();
             }
         }
 
         function createParticles(x, y) {
-            let particleCount = 40;
-            while (particleCount--) {
-                particles.push(new Particle(x, y, Math.random() * 360));
-            }
+            let particleCount = 30;
+            while (particleCount--) { particles.push(new Particle(x, y, Math.random() * 360)); }
         }
 
         function loop() {
             requestAnimationFrame(loop);
             ctx.fillStyle = 'rgba(15, 23, 42, 0.2)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            let i = fireworks.length;
-            while (i--) {
-                fireworks[i].draw();
-                fireworks[i].update(i);
-            }
-
-            let j = particles.length;
-            while (j--) {
-                particles[j].draw();
-                particles[j].update(j);
-            }
+            let i = fireworks.length; while (i--) { fireworks[i].draw(); fireworks[i].update(i); }
+            let j = particles.length; while (j--) { particles[j].draw(); particles[j].update(j); }
         }
 
         function launchFireworks() {
@@ -345,21 +243,24 @@
                 let targetX = Math.random() * window.innerWidth;
                 let targetY = Math.random() * (window.innerHeight / 2);
                 fireworks.push(new Firework(startX, startY, targetX, targetY));
-            }, 500);
+            }, 600);
         }
 
+        // Sequence Handler
         function startCelebration() {
+            // Step 1: Blow candle & play blow sound effect
+            playBlowSound();
             document.getElementById('flame').style.display = 'none';
             document.getElementById('candle').style.background = '#64748b';
-            
-            playBirthdaySong();
 
+            // Step 2 & 3: Transition to Card + Song + Fireworks Sound
             setTimeout(() => {
                 document.getElementById('screen1').style.display = 'none';
                 document.getElementById('screen2').classList.add('show');
+                playBirthdaySong();
                 launchFireworks();
                 loop();
-            }, 600);
+            }, 500);
         }
     </script>
 </body>
