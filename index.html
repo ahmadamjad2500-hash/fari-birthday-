@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Faria ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: #070709;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            user-select: none;
+        }
+        .container {
+            width: 100%; max-width: 800px; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; position: relative; z-index: 10;
+        }
+        .screen {
+            display: none; flex-direction: column; align-items: center;
+            justify-content: center; width: 100%; height: 100%;
+            position: absolute; opacity: 0; transition: opacity 0.8s ease-in-out;
+        }
+        .screen.active { display: flex; opacity: 1; }
+
+        /* Floating Balloons */
+        .balloon {
+            position: absolute; width: 35px; height: 45px;
+            border: 1.5px solid rgba(255, 255, 255, 0.15); border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+        @keyframes float { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-30px) rotate(5deg); } }
+
+        /* SCREEN 1: Click Anywhere Candle Blow */
+        #screen1 { cursor: pointer; }
+        .name-title {
+            font-family: 'Great Vibes', cursive; font-size: 72px;
+            color: #f3ae46; text-shadow: 0 0 25px rgba(243, 174, 70, 0.4); margin-bottom: 40px;
+        }
+        .candle-wrapper { position: relative; margin-bottom: 50px; pointer-events: none; }
+        .flame {
+            width: 16px; height: 28px; background: linear-gradient(#ffffff, #ffb100, #ff5500);
+            border-radius: 50% 50% 20% 20%; position: absolute; top: -30px; left: 50%;
+            transform: translateX(-50%); box-shadow: 0 0 20px #ffb100, 0 0 40px #ff5500;
+            animation: flicker 0.1s infinite alternate;
+        }
+        .candle-body {
+            width: 32px; height: 110px; background: linear-gradient(to right, #e0e0e0, #ffffff, #d5d5d5);
+            border-radius: 4px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .candle-wick { width: 3px; height: 10px; background: #333; margin: 0 auto; }
+        .instruction { font-family: 'Georgia', serif; font-style: italic; font-size: 14px; color: #777; letter-spacing: 2px; }
+
+        /* SCREEN 2: Gold Party Popper / Fireworks */
+        .gold-title {
+            font-family: 'Cinzel', serif; font-size: 36px; letter-spacing: 10px;
+            color: #ebd197; text-shadow: 0 0 20px rgba(235, 209, 151, 0.7); text-align: center;
+            z-index: 20; animation: popIn 0.8s ease-out forwards;
+        }
+        #popperCanvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 15;
+        }
+
+        /* SCREEN 3: Polaroid & General Birthday Wish Note */
+        .polaroid-card {
+            background: #ffffff; padding: 14px 14px 22px 14px; border-radius: 2px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8); transform: rotate(-2deg);
+            max-width: 310px; width: 85%; margin-bottom: 22px;
+        }
+        .polaroid-card img { width: 100%; height: 300px; object-fit: cover; filter: grayscale(100%); }
+        .polaroid-name { color: #111; font-family: 'Caveat', cursive; font-size: 26px; text-align: center; margin-top: 10px; }
+        .note-text {
+            max-width: 85%; font-size: 15px; color: #dddddd; line-height: 1.7;
+            text-align: center; font-family: 'Georgia', serif; background: rgba(255,255,255,0.03);
+            padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @keyframes flicker { 0% { transform: translateX(-50%) scale(1); } 100% { transform: translateX(-50%) scale(1.08); } }
+        @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Background Balloons -->
+    <div class="balloon" style="top: 15%; left: 10%;"></div>
+    <div class="balloon" style="top: 20%; right: 12%;"></div>
+    <div class="balloon" style="bottom: 18%; left: 8%;"></div>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a14d52.mp3?filename=happy-birthday-155461.mp3" preload="auto"></audio>
+
+    <div class="container">
+        <!-- SCREEN 1: Click Anywhere Candle Blow -->
+        <div class="screen active" id="screen1" onclick="blowCandle()">
+            <h1 class="name-title">Faria</h1>
+            <div class="candle-wrapper">
+                <div class="flame" id="flame"></div>
+                <div class="candle-wick"></div>
+                <div class="candle-body"></div>
+            </div>
+            <p class="instruction">make a wish · tap anywhere to blow</p>
+        </div>
+
+        <!-- SCREEN 2: Gold Fireworks / Party Popper Screen -->
+        <div class="screen" id="screen2">
+            <canvas id="popperCanvas"></canvas>
+            <h1 class="gold-title">HAPPY BIRTHDAY</h1>
+        </div>
+
+        <!-- SCREEN 3: Polaroid Photo & General Blessings Note -->
+        <div class="screen" id="screen3">
+            <h1 class="name-title" style="font-size: 48px; margin-bottom: 15px;">Faria</h1>
+            <div class="polaroid-card">
+                <!-- Pehle uploaded faria.jpg load hoga, agar photo na ho toh default portrait aayega -->
+                <img src="faria.jpg" onerror="this.src='https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500'" alt="Faria Photo">
+                <div class="polaroid-name">Faria 💖</div>
+            </div>
+            <p class="note-text">
+                Salgirah bohot bohot mubarak ho! ✨ Allah aapko lambi umer, achi sehat aur dher saari khushiyan ata farmaye. Aapki zindagi me hamesha kamyabi ho, naseeb ache hon aur har tamanna puri ho! Always stay blessed and happy! 🥳🎉🎂
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let blown = false;
+        function blowCandle() {
+            if (blown) return;
+            blown = true;
+
+            document.getElementById('flame').style.display = 'none';
+
+            const music = document.getElementById('bgMusic');
+            if (music) music.play().catch(() => {});
+
+            setTimeout(() => {
+                document.getElementById('screen1').classList.remove('active');
+                document.getElementById('screen2').classList.add('active');
+                triggerPopper();
+            }, 600);
+
+            setTimeout(() => {
+                document.getElementById('screen2').classList.remove('active');
+                document.getElementById('screen3').classList.add('active');
+            }, 4000);
+        }
+
+        function triggerPopper() {
+            const canvas = document.getElementById('popperCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#f3ae46', '#ebd197', '#ffffff', '#ffb100', '#e67e22'];
+
+            for (let i = 0; i < 120; i++) {
+                particles.push({
+                    x: canvas.width / 2,
+                    y: canvas.height / 2,
+                    vx: (Math.random() - 0.5) * 14,
+                    vy: (Math.random() - 0.5) * 14,
+                    size: Math.random() * 6 + 2,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    alpha: 1
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, index) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.alpha -= 0.012;
+                    ctx.globalAlpha = Math.max(0, p.alpha);
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    if (p.alpha <= 0) particles.splice(index, 1);
+                });
+
+                if (particles.length > 0) requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
