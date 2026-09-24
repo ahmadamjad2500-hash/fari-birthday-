@@ -7,7 +7,7 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background: linear-gradient(135deg, #0f172a, #1e1b4b); color: #fff; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden; }
-        .container { text-align: center; width: 100%; max-width: 600px; padding: 20px; position: relative; }
+        .container { text-align: center; width: 100%; max-width: 600px; padding: 20px; position: relative; z-index: 10; }
         #screen1 { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80vh; cursor: pointer; }
         .cake { position: relative; font-size: 100px; margin-bottom: 20px; animation: bounce 2s infinite; }
         .candle { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); width: 12px; height: 45px; background: linear-gradient(to right, #ff758c, #ff7eb3); border-radius: 4px; }
@@ -25,7 +25,7 @@
         h1 { font-size: 2.2rem; color: #fb7185; margin-bottom: 15px; text-shadow: 0 2px 10px rgba(251, 113, 133, 0.4); }
         .message { font-size: 1.1rem; line-height: 1.6; color: #e2e8f0; margin-bottom: 20px; }
         .signature { font-style: italic; color: #f43f5e; font-weight: bold; font-size: 1.2rem; }
-        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 999; }
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
     </style>
 </head>
 <body>
@@ -44,7 +44,7 @@
             <div class="instruction">Tap anywhere to blow candle! 🕯️✨</div>
         </div>
 
-        <!-- Screen 2: Birthday Card & Fireworks -->
+        <!-- Screen 2: Photo & Note -->
         <div id="screen2">
             <div class="card">
                 <div class="photo-frame">
@@ -60,7 +60,6 @@
     </div>
 
     <script>
-        // Web Audio Synthesizer for Candle Blow & Fireworks Sounds
         let audioCtx;
 
         function initAudio() {
@@ -73,7 +72,7 @@
             }
         }
 
-        // 1. Candle Blow Sound (Puff/Wind Effect)
+        // Candle Blow Sound Effect
         function playBlowSound() {
             initAudio();
             const bufferSize = audioCtx.sampleRate * 0.4;
@@ -82,27 +81,22 @@
             for (let i = 0; i < bufferSize; i++) {
                 data[i] = Math.random() * 2 - 1;
             }
-
             const noise = audioCtx.createBufferSource();
             noise.buffer = buffer;
-
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'lowpass';
             filter.frequency.setValueAtTime(400, audioCtx.currentTime);
             filter.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.4);
-
             const gain = audioCtx.createGain();
             gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
-
             noise.connect(filter);
             filter.connect(gain);
             gain.connect(audioCtx.destination);
-
             noise.start();
         }
 
-        // 2. Firework Pop / Explosion Sound
+        // Firework Pop Sound Effect
         function playFireworkSound() {
             if (!audioCtx) return;
             const bufferSize = audioCtx.sampleRate * 0.3;
@@ -111,27 +105,22 @@
             for (let i = 0; i < bufferSize; i++) {
                 data[i] = Math.random() * 2 - 1;
             }
-
             const noise = audioCtx.createBufferSource();
             noise.buffer = buffer;
-
             const filter = audioCtx.createBiquadFilter();
             filter.type = 'lowpass';
             filter.frequency.setValueAtTime(800, audioCtx.currentTime);
             filter.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
-
             const gain = audioCtx.createGain();
             gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-
             noise.connect(filter);
             filter.connect(gain);
             gain.connect(audioCtx.destination);
-
             noise.start();
         }
 
-        // 3. Happy Birthday Music Melody
+        // Happy Birthday Song Tune
         function playBirthdaySong() {
             initAudio();
             const notes = [
@@ -140,7 +129,6 @@
                 {f: 392, d: 250}, {f: 392, d: 250}, {f: 784, d: 500}, {f: 659, d: 500}, {f: 523, d: 500}, {f: 494, d: 500}, {f: 440, d: 1000},
                 {f: 698, d: 250}, {f: 698, d: 250}, {f: 659, d: 500}, {f: 523, d: 500}, {f: 587, d: 500}, {f: 523, d: 1000}
             ];
-
             let time = audioCtx.currentTime + 0.1;
             notes.forEach(note => {
                 const osc = audioCtx.createOscillator();
@@ -157,7 +145,7 @@
             });
         }
 
-        // Fireworks Visual Engine
+        // Fireworks Engine
         const canvas = document.getElementById('fireworksCanvas');
         const ctx = canvas.getContext('2d');
         let fireworks = [];
@@ -184,7 +172,7 @@
                 this.distanceTraveled = Math.hypot(this.x + vx - this.coordinates[this.coordinates.length-1][0], this.y + vy - this.coordinates[this.coordinates.length-1][1]);
                 if (this.distanceTraveled >= this.distanceToTarget) {
                     createParticles(this.tx, this.ty);
-                    playFireworkSound(); // Trigger sound on burst
+                    playFireworkSound();
                     fireworks.splice(index, 1);
                 } else { this.x += vx; this.y += vy; }
             }
@@ -246,14 +234,11 @@
             }, 600);
         }
 
-        // Sequence Handler
         function startCelebration() {
-            // Step 1: Blow candle & play blow sound effect
             playBlowSound();
             document.getElementById('flame').style.display = 'none';
             document.getElementById('candle').style.background = '#64748b';
 
-            // Step 2 & 3: Transition to Card + Song + Fireworks Sound
             setTimeout(() => {
                 document.getElementById('screen1').style.display = 'none';
                 document.getElementById('screen2').classList.add('show');
